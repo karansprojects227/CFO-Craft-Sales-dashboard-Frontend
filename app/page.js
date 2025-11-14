@@ -1,9 +1,7 @@
-import React from 'react'
+// app/page.js
+import { redirect } from "next/navigation";
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
+export default function Home() {
+  // root "/" visit → "/auth/register" pe redirect
+  redirect("/auth/register");
 }
-
-export default page
