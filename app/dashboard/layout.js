@@ -32,7 +32,7 @@ export default function DashboardLayout({ children }) {
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const res = await fetch(`${process.env.API_BASE}/api/user/checkUserExist`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/user/checkUserExist`, {
           method: "GET",
           credentials: "include",
         });
@@ -73,7 +73,7 @@ export default function DashboardLayout({ children }) {
       formData.append("profile", file);
       formData.append("id", user._id);
     
-      const res = await fetch(`${process.env.API_BASE}/upload-profile`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/upload-profile`, {
         method: "POST",
         body: formData,
       });
@@ -123,7 +123,7 @@ export default function DashboardLayout({ children }) {
       hasRun = true;
 
       try {
-        const res = await fetch(`${process.env.API_BASE}/api/protected`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/protected`, {
           method: "GET",
           credentials: "include",
         });
@@ -136,7 +136,7 @@ export default function DashboardLayout({ children }) {
 
           try {
             const userDet = await fetch(
-              `${process.env.API_BASE}/api/fetchUserData?id=${userId}`,
+              `${process.env.NEXT_PUBLIC_API_BASE}/api/fetchUserData?id=${userId}`,
               {
                 method: "GET",
                 credentials: "include",
@@ -184,7 +184,7 @@ export default function DashboardLayout({ children }) {
   // ✅ Logout function
   const handleLogout = async () => {
     try {
-      const res = await fetch(`${process.env.API_BASE}/api/auth/logout`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/auth/logout`, {
         method: "POST",
         credentials: "include",
       });
