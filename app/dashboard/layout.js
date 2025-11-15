@@ -28,36 +28,6 @@ export default function DashboardLayout({ children }) {
   const router = useRouter();
   const fileInputRef = useRef(null);
 
-  // ✅ Check user details exist in DB
-  useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/user/checkUserExist`, {
-          method: "GET",
-          credentials: "include",
-        });
-
-        const data = await res.json();
-
-        // --- USER EXISTS ---
-        if (data.success === true) {
-          return; // do nothing
-        }
-
-        // --- USER DOES NOT EXIST ---
-        toast.error("User does not exist anymore. Please register again.");
-        router.replace("/auth/register");
-
-      } catch (error) {
-        console.error("Fetch error:", error);
-        toast.error("Network error!");
-        router.replace("/auth/login");
-      }
-    };
-
-    checkUser();
-  }, [router]);
-
   // ✅ profile click upload image handle
   const handleImageClick = () => {
     fileInputRef.current.click();
