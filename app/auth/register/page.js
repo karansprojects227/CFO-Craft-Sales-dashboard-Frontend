@@ -9,6 +9,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 
   // Handle input changes dynamically
   const handleChange = (e) => {
@@ -24,7 +25,7 @@ export default function RegisterPage() {
     setError("");
 
     try {
-      const res = await fetch(`https://cfo-craft-sales-dashboard-backend.onrender.com/api/auth/register`, {
+      const res = await fetch(`${API_BASE}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
