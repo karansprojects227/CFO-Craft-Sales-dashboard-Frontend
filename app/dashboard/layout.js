@@ -60,12 +60,22 @@ export default function DashboardLayout({ children }) {
       const data = await res.json();
     
       toast.success(data.message);
-    
+
+      // ❗ Update profilePic instantly in UI
       if (data.user?.profilePic) {
         setUser((prev) => ({
           ...prev,
           profilePic: `${process.env.NEXT_PUBLIC_API_BASE}/uploads/${data.user.profilePic}`,
         }));
+        
+        // Save to localStorage also (reload ke baad bhi dikh sake)
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            ...user,
+            profilePic: `${process.env.NEXT_PUBLIC_API}/uploads/${data.user.profilePic}`,
+          })
+        );
       }
     
     } catch (error) {
