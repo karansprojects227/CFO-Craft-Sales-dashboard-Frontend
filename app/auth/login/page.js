@@ -18,6 +18,7 @@ export default function LoginPage() {
   // TIMER STATE
   const [timer, setTimer] = useState(30);
   const [resending, setResending] = useState(false);
+  const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 
   // Input handler
   const handleChange = (e) => {
@@ -33,7 +34,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/login", {
+      const res = await fetch(`${API_BASE}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: identifier }),
@@ -64,7 +65,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/checkpass", {
+      const res = await fetch(`${API_BASE}/api/auth/checkpass`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -96,7 +97,7 @@ export default function LoginPage() {
 
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/auth/verify-login-otp", {
+      const res = await fetch(`${API_BASE}/api/auth/verify-login-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials:"include",
@@ -120,7 +121,7 @@ export default function LoginPage() {
     setResending(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/send-otp", {
+      const res = await fetch(`${API_BASE}/api/auth/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, otpChannel }),
@@ -215,24 +216,21 @@ export default function LoginPage() {
           {requiresPassword && (
             <form onSubmit={handlePasswordSubmit} className="space-y-4">
               {/* Password Input */}
-              <div className="relative">
-                <input
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={handleChange}
-                  placeholder="Enter your password"
-                  className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
-                  required
-                />
-              </div>
+              <input
+                type="password"
+                name="password"
+                value={password}
+                onChange={handleChange}
+                placeholder="Password"
+                className="w-full px-4 py-3 rounded-lg bg-white/10 border border-gray-400/30 text-white focus:ring-2 focus:ring-blue-500 outline-none"
+              />
 
-              {/* Forgot Password Link */}
-              <div className="text-right">
+              {/* Forgot Password + Premium Options */}
+              <div className="flex justify-end text-sm text-gray-300">
                 <button
                   type="button"
-                  onClick={() => router.push("/auth/forgot-password")} // Navigate to forgot password page
-                  className="text-sm text-blue-400 hover:text-blue-500 font-medium transition-colors cursor-pointer"
+                  onClick={() => router.push("/auth/forgot-password")}
+                  className="hover:text-cyan-400 transition-colors"
                 >
                   Forgot Password?
                 </button>
@@ -243,7 +241,7 @@ export default function LoginPage() {
                 type="submit"
                 disabled={loading || !password}
                 className="w-full py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 font-semibold 
-                  text-white hover:scale-[1.02] transition-transform disabled:opacity-70 text-sm sm:text-base cursor-pointer shadow-md hover:shadow-lg"
+                text-white hover:scale-[1.02] transition-transform disabled:opacity-70 text-sm sm:text-base cursor-pointer"
               >
                 {loading ? "Logging in..." : "Login"}
               </button>
