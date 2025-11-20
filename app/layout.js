@@ -1,3 +1,4 @@
+"use client";
 // app/layout.js
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
