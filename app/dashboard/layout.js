@@ -46,7 +46,7 @@ export default function DashboardLayout({ children }) {
       // 🟡 Show loading toast
       const loadingToast = toast.loading("Uploading image...");
     
-      const res = await fetch("http://localhost:5000/upload-profile", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/upload-profile`, {
         method: "POST",
         body: formData,
       });
@@ -63,12 +63,14 @@ export default function DashboardLayout({ children }) {
       const data = await res.json();
 
       toast.dismiss(loadingToast);
-    
+      
+      // ❗ Update profilePic instantly in UI
       if (data.user?.profilePic) {
         setUser((prev) => ({
           ...prev,
-          profilePic: data.user.profilePic,
-        }));
+          profilePic: data.user.profilePic, // BASE64 directly
+      }));
+
       }
     
     } catch (error) {
@@ -96,7 +98,7 @@ export default function DashboardLayout({ children }) {
       hasRun = true;
 
       try {
-        const res = await fetch("http://localhost:5000/api/protected", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/protected`, {
           method: "GET",
           credentials: "include",
         });
@@ -109,7 +111,7 @@ export default function DashboardLayout({ children }) {
 
           try {
             const userDet = await fetch(
-              `http://localhost:5000/api/fetchUserData?id=${userId}`,
+              `${process.env.NEXT_PUBLIC_API_BASE}/api/fetchUserData?id=${userId}`,
               {
                 method: "GET",
                 credentials: "include",
@@ -156,7 +158,7 @@ export default function DashboardLayout({ children }) {
   // ✅ Logout function
   const handleLogout = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/auth/logout", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/auth/logout`, {
         method: "POST",
         credentials: "include",
       });
