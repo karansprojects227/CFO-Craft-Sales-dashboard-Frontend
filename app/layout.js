@@ -2,6 +2,7 @@
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { UserProvider } from "../context/UserContext"; // ✅ import provider
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 export const metadata = {
   title: "CFO Craft Sales Dashboard",
@@ -16,7 +17,8 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         {/* ✅ Wrap everything inside the UserProvider */}
-        <UserProvider>
+        <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID}>
+          <UserProvider>
           {children}
           <Toaster
             position="top-right"
@@ -42,6 +44,7 @@ export default function RootLayout({ children }) {
             }}
           />
         </UserProvider>
+        </GoogleOAuthProvider>
       </body>
     </html>
   );

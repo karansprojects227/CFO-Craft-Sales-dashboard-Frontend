@@ -28,36 +28,6 @@ export default function DashboardLayout({ children }) {
   const router = useRouter();
   const fileInputRef = useRef(null);
 
-  // ✅ Check user details exist in DB
-  useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/user/checkUserExist", {
-          method: "GET",
-          credentials: "include",
-        });
-
-        const data = await res.json();
-
-        // --- USER EXISTS ---
-        if (data.success === true) {
-          return; // do nothing
-        }
-
-        // --- USER DOES NOT EXIST ---
-        toast.error("User does not exist anymore. Please register again.");
-        router.replace("/auth/register");
-
-      } catch (error) {
-        console.error("Fetch error:", error);
-        toast.error("Network error!");
-        router.replace("/auth/login");
-      }
-    };
-
-    checkUser();
-  }, [router]);
-
   // ✅ profile click upload image handle
   const handleImageClick = () => {
     fileInputRef.current.click();
@@ -72,6 +42,9 @@ export default function DashboardLayout({ children }) {
       const formData = new FormData();
       formData.append("profile", file);
       formData.append("id", user._id);
+
+      // 🟡 Show loading toast
+      const loadingToast = toast.loading("Uploading image...");
     
       const res = await fetch("http://localhost:5000/upload-profile", {
         method: "POST",
@@ -88,13 +61,13 @@ export default function DashboardLayout({ children }) {
       }
     
       const data = await res.json();
-    
-      toast.success(data.message);
+
+      toast.dismiss(loadingToast);
     
       if (data.user?.profilePic) {
         setUser((prev) => ({
           ...prev,
-          profilePic: `http://localhost:5000/uploads/${data.user.profilePic}`,
+          profilePic: data.user.profilePic,
         }));
       }
     
@@ -151,27 +124,26 @@ export default function DashboardLayout({ children }) {
               // ✅ Show toast only if it's a fresh login (not a refresh)
               const hasShownToast = sessionStorage.getItem("welcomeShown");
               if (!hasShownToast) {
-                toast.success(userData.message);
                 toast.success("Welcome back, " + userDetails.user.name + "!");
                 sessionStorage.setItem("welcomeShown", "true");
               }
             } else {
-              toast.error("Failed to fetch user details");
+              toast.error(userDetails.message);
             }
           } catch (err) {
             console.error("Auth check failed:", err);
             setIsAuthenticated(false);
-            toast.error("Access denied! Please Login");
+            toast.error(userData.message);
             router.replace("/auth/login");
           }
         } else {
           setIsAuthenticated(false);
-          toast.error("Access denied! Please Login");
+          toast.error(userData.message);
           router.replace("/auth/login");
         }
       } catch (err) {
         setIsAuthenticated(false);
-        toast.error("Access denied! Please Login");
+        toast.error(err.message);
         router.replace("/auth/login");
       } finally {
         setIsLoading(false);
@@ -354,8 +326,8 @@ export default function DashboardLayout({ children }) {
                 onClick={handleImageClick}
                 className="w-10 h-10 rounded-full border border-gray-700 cursor-pointer hover:opacity-80 object-cover"
                 onError={(e) => {
-                  e.target.onerror = null; // avoid infinite loop
-                  setUser((prev) => ({ ...prev, profilePic: "default-user" }));
+                  e.target.onerror = null;  // avoid infinite loop
+                  e.target.src = "/default-user.png"; // frontend fallback only
                 }}
               />
             ) : (
