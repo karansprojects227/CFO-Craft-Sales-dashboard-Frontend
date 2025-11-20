@@ -19,6 +19,7 @@ export default function RegisterPage() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [errors, setErrors] = useState([]);
+  const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 
   // 🔥 OTP Sent Flag (switch UI)
   const [otpSent, setOtpSent] = useState(false);
@@ -50,7 +51,7 @@ export default function RegisterPage() {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/register", {
+      const res = await fetch(`${API_BASE}/api/auth/register` {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -87,7 +88,7 @@ export default function RegisterPage() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/verify-regsiter-otp", {
+      const res = await fetch(`${API_BASE}/api/auth/verify-regsiter-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -116,7 +117,7 @@ export default function RegisterPage() {
     setResending(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/send-otp", {
+      const res = await fetch(`${API_BASE}/api/auth/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, otpChannel }),
