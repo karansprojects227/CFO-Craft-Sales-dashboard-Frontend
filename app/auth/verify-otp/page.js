@@ -10,14 +10,9 @@ export default function VerifyOtpPage() {
   const [resending, setResending] = useState(false);
   const [otpSent, setOtpSent] = useState(true); // OTP has already been sent
   const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
-  
-  const [email, setEmail] = useState("");
 
-  useEffect(() => {
-    const searchParams = useSearchParams();
-    const e = searchParams.get("email");
-    if (e) setEmail(e);
-  }, []);
+  const searchParams = useSearchParams();
+  const e = searchParams.get("email");
 
   // TIMER EFFECT
   useEffect(() => {
@@ -150,3 +145,4 @@ export default function VerifyOtpPage() {
     </div>
   );
 }
+
