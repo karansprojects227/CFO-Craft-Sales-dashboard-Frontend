@@ -18,6 +18,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [errors, setErrors] = useState([]);
 
   // 🔥 OTP Sent Flag (switch UI)
   const [otpSent, setOtpSent] = useState(false);
@@ -56,12 +57,21 @@ export default function RegisterPage() {
       });
 
       const data = await res.json();
-
+      
+      console.log(data);
+      
       if (res.ok) {
         setMessage("OTP sent successfully!");
         setOtpSent(true); // 🔥 Show OTP Verify Form
       } else {
-        setError(data.message || "Something went wrong!");
+        if (data.errors) {
+          setErrors(data.errors); // optional, state me bhi rakh sakte ho
+          showPasswordErrors(data.errors); // toast me line by line show
+          return;
+        }
+        else{
+          setError(data.message); 
+        }
       }
     } catch (err) {
       setError("Server error. Please try again later.");
@@ -151,6 +161,20 @@ export default function RegisterPage() {
 
     return () => clearInterval(interval);
   }, [otpSent, timer]);
+
+  const showPasswordErrors = (errors) => {
+    toast.error(
+      <div>
+        {errors.map((err, index) => (
+          <div key={index}>{err}</div> // line by line show
+        ))}
+      </div>,
+      {
+        duration: 5000,
+        position: "top-right",
+      }
+    );
+  };
 
   return (
     <div className="min-h-screen flex items-center flex-col justify-center bg-gradient-to-br from-blue-950 via-gray-900 to-gray-800 px-4">

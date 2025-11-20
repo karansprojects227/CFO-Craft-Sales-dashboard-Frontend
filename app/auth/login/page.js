@@ -214,19 +214,36 @@ export default function LoginPage() {
           {/* STEP 2 → Password Login */}
           {requiresPassword && (
             <form onSubmit={handlePasswordSubmit} className="space-y-4">
-              <input
-                type="password"
-                name="password"
-                value={password}
-                onChange={handleChange}
-                placeholder="Password"
-                className="w-full px-4 py-3 rounded-lg bg-white/10 border border-gray-400/30 text-white"
-              />
+              {/* Password Input */}
+              <div className="relative">
+                <input
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={handleChange}
+                  placeholder="Enter your password"
+                  className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
+                  required
+                />
+              </div>
+
+              {/* Forgot Password Link */}
+              <div className="text-right">
+                <button
+                  type="button"
+                  onClick={() => router.push("/auth/forgot-password")} // Navigate to forgot password page
+                  className="text-sm text-blue-400 hover:text-blue-500 font-medium transition-colors cursor-pointer"
+                >
+                  Forgot Password?
+                </button>
+              </div>
+
+              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={loading || !password}
                 className="w-full py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 font-semibold 
-                text-white hover:scale-[1.02] transition-transform disabled:opacity-70 text-sm sm:text-base cursor-pointer"
+                  text-white hover:scale-[1.02] transition-transform disabled:opacity-70 text-sm sm:text-base cursor-pointer shadow-md hover:shadow-lg"
               >
                 {loading ? "Logging in..." : "Login"}
               </button>

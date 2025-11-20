@@ -1,6 +1,7 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function ResetPasswordPage() {
   const { userId } = useParams();
@@ -10,23 +11,19 @@ export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [errors, setErrors] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setMessage("");
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match!");
-      return;
-    }
-
     setLoading(true);
     try {
       const res = await fetch(`http://localhost:5000/api/auth/reset-password/${userId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ password, confirmPassword }),
       });
 
       const data = await res.json();
@@ -39,7 +36,14 @@ export default function ResetPasswordPage() {
         // Redirect to login page after 2s
         setTimeout(() => router.push("/auth/login"), 2000);
       } else {
-        setError(data.error || "Failed to reset password!");
+        if (data.errors) {
+          setErrors(data.errors); // optional, state me bhi rakh sakte ho
+          showPasswordErrors(data.errors); // toast me line by line show
+          return;
+        }
+        else{
+          setError(data.error || "Failed to reset password!");
+        }
       }
     } catch {
       setError("Server error. Please try again later.");
@@ -48,34 +52,61 @@ export default function ResetPasswordPage() {
     }
   };
 
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-br from-blue-950 via-gray-900 to-gray-800 text-white px-4">
-      {/* 🔹 Background Effects */}
-      <div className="absolute top-[-10rem] right-[-10rem] w-[25rem] h-[25rem] rounded-full bg-blue-500/20 blur-3xl animate-pulse" />
-      <div className="absolute bottom-[-10rem] left-[-10rem] w-[25rem] h-[25rem] rounded-full bg-indigo-500/20 blur-3xl animate-pulse" />
+  const showPasswordErrors = (errors) => {
+    toast.error(
+      <div>
+        {errors.map((err, index) => (
+          <div key={index}>{err}</div> // line by line show
+        ))}
+      </div>,
+      {
+        duration: 5000,
+        position: "top-right",
+      }
+    );
+  };
 
-      {/* 🔹 Logo Section */}
-      <div className="flex items-center mb-8 space-x-3 z-10 mt-2">
-        <img
-          src="https://cfocraft.com/wp-content/uploads/2023/04/WhatsApp-Image-2024-06-17-at-5.12.35-PM-1-e1723554014801.jpeg"
-          alt="CFO Craft"
-          width={55}
-          height={55}
-          className="rounded-lg"
-          loading="lazy"
-        />
-        <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
-          CFO Craft
-        </h1>
-      </div>
+  // -----------------------------------------
+  // Toast Alerts
+  // -----------------------------------------
+  useEffect(() => {
+    if (message) toast.success(message);
+    if (error) toast.error(error);
+  }, [message, error]);
+
+  return (
+    <div className="min-h-screen flex items-center flex-col justify-center bg-gradient-to-br from-blue-950 via-gray-900 to-gray-800 px-4">
+          
+          {/* Logo Section */}
+          <div className="mb-8 space-x-3 z-10 mt-2 absolute left-10 top-2 hidden sm:block">
+            <img
+              src="https://cfocraft.com/wp-content/uploads/2023/04/WhatsApp-Image-2024-06-17-at-5.12.35-PM-1-e1723554014801.jpeg"
+              alt="CFO Craft"
+              width={100}
+              height={100}
+              className="rounded-lg"
+              loading="lazy"
+            />
+          </div>
+    
+          {/* Logo / Title */}
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight pt-6 pb-4 bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text text-center">
+            CFO CRAFT
+          </h1>
+
+          <div className="relative w-full max-w-md bg-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 sm:p-12 shadow-[0_0_80px_rgba(0,255,255,0.15)] overflow-hidden">
+
+            {/* Glow Effects */}
+            <div className="absolute -top-10 -left-10 w-40 h-40 bg-cyan-500/20 blur-3xl rounded-full -z-10"></div>
+            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500/20 blur-3xl rounded-full -z-10"></div>
 
       {/* 🔹 Main Card */}
       <form
         onSubmit={handleSubmit}
-        className="relative z-10 w-full max-w-md backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl p-8 transition-all space-y-5"
+        className="w-full max-w-s p-6 space-y-4"
       >
-        <h2 className="text-2xl font-semibold text-center">Reset Password</h2>
-        <p className="text-gray-300 text-center text-sm mb-4">
+        <h2 className="text-2xl font-semibold text-center mb-4 sm:mb-6 bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">Reset Password</h2>
+        <p className="text-center text-gray-300 text-sm">
           Enter and confirm your new password below.
         </p>
 
@@ -101,7 +132,7 @@ export default function ResetPasswordPage() {
         <button
           type="submit"
           disabled={loading}
-          className={`w-full py-3 rounded-lg font-semibold text-white transition-all flex items-center justify-center space-x-2
+          className={`w-full py-3 rounded-lg font-semibold text-white transition-all flex items-center justify-center space-x-2 cursor-pointer
             ${loading
               ? "bg-gray-500 cursor-not-allowed"
               : "bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-[1.02]"
@@ -117,19 +148,15 @@ export default function ResetPasswordPage() {
           )}
         </button>
 
-        {/* ✅ Status Messages */}
-        {message && (
-          <p className="text-green-400 text-center text-sm mt-2">{message}</p>
-        )}
-        {error && (
-          <p className="text-red-400 text-center text-sm mt-2">{error}</p>
-        )}
       </form>
+
+      </div>
 
       {/* 🔹 Footer */}
       <p className="text-gray-500 text-xs mt-10 z-10">
         © 2025 CFO Craft Inc. All rights reserved.
       </p>
+    
     </div>
   );
 }

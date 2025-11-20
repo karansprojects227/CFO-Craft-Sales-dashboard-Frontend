@@ -84,7 +84,25 @@ export default function VerifyOtpPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-950 via-gray-900 to-gray-800 text-white px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-950 via-gray-900 to-gray-800 text-white px-4">
+      
+      {/* Logo Section */}
+          <div className="mb-8 space-x-3 z-10 mt-2 absolute left-10 top-2 hidden sm:block">
+            <img
+              src="https://cfocraft.com/wp-content/uploads/2023/04/WhatsApp-Image-2024-06-17-at-5.12.35-PM-1-e1723554014801.jpeg"
+              alt="CFO Craft"
+              width={100}
+              height={100}
+              className="rounded-lg"
+              loading="lazy"
+            />
+          </div>
+    
+          {/* Logo / Title */}
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight pt-6 pb-4 bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text text-center">
+            CFO CRAFT
+          </h1>
+      
       <div className="relative w-full max-w-md bg-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 sm:p-12 shadow-[0_0_80px_rgba(0,255,255,0.15)] overflow-hidden">
 
         {/* Glow Effects */}
