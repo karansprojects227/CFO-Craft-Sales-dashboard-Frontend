@@ -20,6 +20,7 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const [errors, setErrors] = useState([]);
   const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
+  console.log("API BASE IS →", API_BASE);
 
   // 🔥 OTP Sent Flag (switch UI)
   const [otpSent, setOtpSent] = useState(false);
