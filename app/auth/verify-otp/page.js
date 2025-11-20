@@ -10,8 +10,13 @@ export default function VerifyOtpPage() {
   const [resending, setResending] = useState(false);
   const [otpSent, setOtpSent] = useState(true); // OTP has already been sent
   
-  const searchParams = useSearchParams();
-  const email = searchParams.get("email"); // fetch email from URL params
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const searchParams = useSearchParams();
+    const e = searchParams.get("email");
+    if (e) setEmail(e);
+  }, []);
 
   // TIMER EFFECT
   useEffect(() => {
