@@ -12,7 +12,7 @@ export default function VerifyOtpPage() {
   const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 
   const searchParams = useSearchParams();
-  const e = searchParams.get("email");
+  const email = searchParams.get("email");
 
   // TIMER EFFECT
   useEffect(() => {
@@ -145,4 +145,5 @@ export default function VerifyOtpPage() {
     </div>
   );
 }
+
 
