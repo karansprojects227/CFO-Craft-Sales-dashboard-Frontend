@@ -1,6 +1,5 @@
 "use client";
 
-import { Suspense } from "react";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useSearchParams, useRouter } from "next/navigation";
