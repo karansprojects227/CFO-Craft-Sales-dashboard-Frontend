@@ -12,9 +12,6 @@ export default function VerifyOtpPage() {
   const [otpSent, setOtpSent] = useState(true); // OTP has already been sent
   const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 
-  const searchParams = useSearchParams();
-  const email = searchParams.get("email");
-
   // TIMER EFFECT
   useEffect(() => {
     if (!otpSent || timer === 0) return;
@@ -42,7 +39,7 @@ export default function VerifyOtpPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, otp }),
+        body: JSON.stringify({ otp }),
       });
     
       const data = await res.json();
@@ -154,3 +151,4 @@ export default function VerifyOtpPage() {
 
 
     
+
