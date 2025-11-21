@@ -1,9 +1,13 @@
+"use client";
+
+import { Suspense } from "react";
 import SearchParamClient from "./SearchParamClient";
 
-export default function Page() {
+export default function VerifyOtpPage() {
   return (
-    <div>
+    <Suspense fallback={<div>Loading...</div>}>
       <SearchParamClient />
-    </div>
+    </Suspense>
   );
 }
+    
