@@ -1,5 +1,5 @@
 "use client";
-export const dynamic = "force-dynamic";
+export const dynamicParams = true;
 
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
@@ -147,4 +147,5 @@ export default function VerifyOtpPage() {
     </div>
   );
 }
+
 
