@@ -20,7 +20,6 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const [errors, setErrors] = useState([]);
   const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
-  console.log("API BASE IS →", API_BASE);
 
   // 🔥 OTP Sent Flag (switch UI)
   const [otpSent, setOtpSent] = useState(false);
@@ -29,7 +28,7 @@ export default function RegisterPage() {
   const [otp, setOtp] = useState("");
 
   // TIMER STATE
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(60);
   const [resending, setResending] = useState(false);
   
   // -----------------------------------------
@@ -59,9 +58,7 @@ export default function RegisterPage() {
       });
 
       const data = await res.json();
-      
-      console.log(data);
-      
+
       if (res.ok) {
         setMessage("OTP sent successfully!");
         setOtpSent(true); // 🔥 Show OTP Verify Form
@@ -71,9 +68,7 @@ export default function RegisterPage() {
           showPasswordErrors(data.errors); // toast me line by line show
           return;
         }
-        else{
-          setError(data.message); 
-        }
+        else return setError(data.message);
       }
     } catch (err) {
       setError("Server error. Please try again later.");
@@ -89,7 +84,7 @@ export default function RegisterPage() {
     e.preventDefault();
 
     try {
-      const res = await fetch(`${API_BASE}/api/auth/verify-regsiter-otp`, {
+      const res = await fetch(`${API_BASE}/api/auth/verify-register-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -101,13 +96,13 @@ export default function RegisterPage() {
       const data = await res.json();
 
       if (res.ok) {
-        toast.success("Account created successfully!");
+        setMessage(data.message);
         router.push("/auth/login");
       } else {
-        toast.error(data.message || "Invalid OTP!");
+        setError(data.message);
       }
     } catch (error) {
-      toast.error("Server error!");
+      setError("Server error!");
     }
   };
 
@@ -121,18 +116,20 @@ export default function RegisterPage() {
       const res = await fetch(`${API_BASE}/api/auth/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials:"include",
         body: JSON.stringify({ ...formData, otpChannel }),
       });
 
       const data = await res.json();
 
       if (data.success) {
-        setTimer(30); // timer reset
+        setMessage(data.message);
+        setTimer(60); // timer reset
       } else {
-        toast.success(data.message);
+        setMessage(data.message);
       }
     } catch (err) {
-      toast.error(err);
+      setError(err);
     }
 
     setResending(false);
@@ -365,7 +362,8 @@ export default function RegisterPage() {
                 
               <button
                 type="submit"
-                className="w-full py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 font-semibold"
+                className="w-full py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 font-semibold 
+                    text-white hover:scale-[1.02] transition-transform disabled:opacity-70 text-sm sm:text-base"
               >
                 Verify OTP
               </button>
