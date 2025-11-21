@@ -386,7 +386,7 @@ export default function RegisterPage() {
           {!otpSent ? (
             <button
             onClick={() => {
-              window.location.href = "http://localhost:5000/api/auth/google";
+              window.location.href = `${NEXT_PUBLIC_API_BASE}/api/auth/google`;
             }}
             className="relative w-full flex items-center justify-center gap-3 py-3 
                        rounded-xl overflow-hidden group cursor-pointer 
