@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function VerifyOtpPage() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(60); // 60s timer
   const [resending, setResending] = useState(false);
@@ -151,5 +152,6 @@ export default function VerifyOtpPage() {
 
 
     
+
 
 
