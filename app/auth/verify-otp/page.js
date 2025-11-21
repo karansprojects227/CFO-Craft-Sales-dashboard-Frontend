@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function VerifyOtpPage() {
   const router = useRouter();
@@ -151,4 +151,5 @@ export default function VerifyOtpPage() {
 
 
     
+
 
