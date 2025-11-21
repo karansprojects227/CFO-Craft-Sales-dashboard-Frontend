@@ -121,6 +121,7 @@ export default function DashboardLayout({ children }) {
             const userDetails = await userDet.json();
 
             if (userDetails?.user) {
+              console.log(userDetails.user);
               setUser(userDetails.user);
 
               // ✅ Show toast only if it's a fresh login (not a refresh)
@@ -321,25 +322,28 @@ export default function DashboardLayout({ children }) {
             </span>
 
             {/* Profile Image OR Default Icon */}
-            {user.profilePic !== "default-user" ? (
+            {user.profilePic && user.profilePic !== "default-user" ? (
               <img
                 src={user.profilePic}
                 alt="profile"
                 onClick={handleImageClick}
                 className="w-10 h-10 rounded-full border border-gray-700 cursor-pointer hover:opacity-80 object-cover"
                 onError={(e) => {
-                  e.target.onerror = null;  // avoid infinite loop
-                  e.target.src = "/default-user.png"; // frontend fallback only
+                  e.target.onerror = null; // avoid infinite loop
+                  e.target.style.display = "none"; // hide broken image
+                  e.target.nextSibling.style.display = "flex"; // show fallback div
                 }}
               />
-            ) : (
-              <div
-                onClick={handleImageClick}
-                className="w-10 h-10 rounded-full border border-gray-700 cursor-pointer hover:opacity-80 flex items-center justify-center bg-gray-800"
-              >
-                <User className="w-6 h-6 text-gray-400" />
-              </div>
-            )}
+            ) : null}
+            
+            {/* Fallback Icon */}
+            <div
+              onClick={handleImageClick}
+              className="w-10 h-10 rounded-full border border-gray-700 cursor-pointer hover:opacity-80 flex items-center justify-center bg-gray-800"
+              style={{ display: user.profilePic && user.profilePic !== "default-user" ? "none" : "flex" }}
+            >
+              <User className="w-6 h-6 text-gray-400" />
+            </div>
 
             {/* Hidden File Input */}
             <input
