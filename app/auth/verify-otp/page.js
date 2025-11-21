@@ -87,6 +87,7 @@ export default function VerifyOtpPage() {
   };
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-950 via-gray-900 to-gray-800 text-white px-4">
       <div className="relative w-full max-w-md bg-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 sm:p-12 shadow-[0_0_80px_rgba(0,255,255,0.15)] overflow-hidden">
 
@@ -145,8 +146,10 @@ export default function VerifyOtpPage() {
         </form>
       </div>
     </div>
+              </Suspense>
   );
 }
+
 
 
 
