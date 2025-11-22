@@ -16,7 +16,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   // TIMER STATE
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(60);
   const [resending, setResending] = useState(false);
   const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 
@@ -130,7 +130,7 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (data.success) {
-        setTimer(30); // timer reset
+        setTimer(60); // timer reset
       } else {
         toast.success(data.message);
       }
@@ -355,4 +355,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
 
