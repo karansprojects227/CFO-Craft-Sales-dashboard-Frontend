@@ -1,8 +1,7 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 export default function VerifyOtpPage() {
   const router = useRouter();
@@ -27,16 +26,11 @@ export default function VerifyOtpPage() {
   // HANDLE OTP VERIFY
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
-    
-    if (!otp || otp.length !== 6) {
-      toast.error("Please enter a valid 6-digit OTP");
-      return;
-    }
   
     try {
       const res = await fetch(`${API_BASE}/api/auth/verify-otp`, {
         method: "POST",
-        credentials: "include", // important for cookies (JWT)
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -46,7 +40,7 @@ export default function VerifyOtpPage() {
       const data = await res.json();
     
       if (!res.ok) {
-        toast.error(data.message || "Invalid OTP");
+        toast.error(data.message);
         return;
       }
     
@@ -66,7 +60,6 @@ export default function VerifyOtpPage() {
       const res = await fetch(`${API_BASE}/api/auth/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
       });
       const data = await res.json();
 
@@ -95,8 +88,8 @@ export default function VerifyOtpPage() {
           Verify OTP
         </h2>
 
-        <p className="text-center text-gray-300 mb-8 text-sm">
-          OTP has been sent to <span className="text-cyan-300 font-medium">{email}</span>
+        <p className="text-center text-red-400 font-medium mb-8 text-sm">
+          OTP has been sent to your registered email
         </p>
 
         <form onSubmit={handleVerifyOtp} className="space-y-5">
@@ -144,14 +137,3 @@ export default function VerifyOtpPage() {
     </div>
   );
 }
-
-
-
-
-
-
-
-    
-
-
-
