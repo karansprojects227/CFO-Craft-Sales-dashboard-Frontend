@@ -12,7 +12,8 @@ export default function RegisterPage() {
     name: "",
     phone: "",
     email: "",
-    password: ""
+    password: "",
+    otpChannel
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -436,4 +437,3 @@ export default function RegisterPage() {
     </div>
   );
 }
-
