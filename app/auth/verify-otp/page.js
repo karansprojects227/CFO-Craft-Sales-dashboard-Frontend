@@ -129,7 +129,7 @@ export default function VerifyOtpPage() {
           {/* Verify Button */}
           <button
             type="submit"
-            className="w-full py-3.5 rounded-xl text-lg font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg hover:shadow-cyan-500/40 hover:brightness-110 transition-all duration-200 active:scale-[0.97]"
+            className="w-full cursor-pointer py-3.5 rounded-xl text-lg font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg hover:shadow-cyan-500/40 hover:brightness-110 transition-all duration-200 active:scale-[0.97]"
           >
             Verify OTP
           </button>
@@ -138,3 +138,4 @@ export default function VerifyOtpPage() {
     </div>
   );
 }
+
