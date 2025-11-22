@@ -59,6 +59,7 @@ export default function VerifyOtpPage() {
     try {
       const res = await fetch(`${API_BASE}/api/auth/send-otp`, {
         method: "POST",
+        credentials:"include",
         headers: { "Content-Type": "application/json" },
       });
       const data = await res.json();
