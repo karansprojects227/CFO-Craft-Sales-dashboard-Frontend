@@ -119,7 +119,7 @@ export default function VerifyOtpPage() {
               type="button"
               disabled={timer > 0 || resending}
               onClick={handleResendOtp}
-              className={`font-semibold ${timer > 0 || resending ? "text-gray-500 cursor-not-allowed" : "text-cyan-300 hover:text-cyan-200"}`}
+              className={`font-semibold ${timer > 0 || resending ? "text-gray-500 cursor-not-allowed" : "text-cyan-300 hover:text-cyan-200 cursor-pointer"}`}
               aria-label="Resend OTP"
             >
               {resending ? "Resending..." : "Resend OTP"}
@@ -138,4 +138,5 @@ export default function VerifyOtpPage() {
     </div>
   );
 }
+
 
