@@ -130,7 +130,7 @@ export default function ResetPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-3 rounded-lg font-semibold text-white transition-all cursor-pointer flex items-center justify-center space-x-2
+                className={`w-full cursor-pointer py-3.5 rounded-xl text-lg font-semibold shadow-lg hover:shadow-cyan-500/40 hover:brightness-110 transition-all duration-200 active:scale-[0.97]
                   ${loading
                     ? "bg-gray-500 cursor-not-allowed"
                     : "bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-[1.02]"
@@ -158,3 +158,4 @@ export default function ResetPasswordPage() {
     </div>
   );
 }
+
