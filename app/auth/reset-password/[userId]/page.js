@@ -115,7 +115,6 @@ export default function ResetPasswordPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg bg-white/10 border border-gray-400/30 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-                required
               />
       
               <input
@@ -124,14 +123,14 @@ export default function ResetPasswordPage() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg bg-white/10 border border-gray-400/30 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-                required
+
               />
       
               {/* ✅ Button with Spinner */}
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-3 rounded-lg font-semibold text-white transition-all flex items-center justify-center space-x-2
+                className={`w-full py-3 rounded-lg font-semibold text-white transition-all cursor-pointer flex items-center justify-center space-x-2
                   ${loading
                     ? "bg-gray-500 cursor-not-allowed"
                     : "bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-[1.02]"
