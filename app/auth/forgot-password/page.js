@@ -54,6 +54,9 @@ export default function ForgotPasswordPage() {
   // -----------------------------------------
   const handleResetPasswordVerifyOtp = async (e) => {
     e.preventDefault();
+    setError("");
+    setMessage("");
+    setLoading(true);
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/auth/verify-reset-password-otp`, {
@@ -77,6 +80,7 @@ export default function ForgotPasswordPage() {
     } catch (error) {
       toast.error("Server error!");
     }
+    setLoading(false);
   };
 
   // -----------------------------------------
@@ -167,14 +171,13 @@ export default function ForgotPasswordPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg bg-white/10 border border-gray-400/30 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
-                required
               />
 
               {/* ✅ Button with Spinner */}
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-3 rounded-lg font-semibold text-white transition-all flex items-center justify-center space-x-2
+                className={`w-full py-3 rounded-lg font-semibold text-white cursor-pointer transition-all flex items-center justify-center space-x-2
                   ${loading
                     ? "bg-gray-500 cursor-not-allowed"
                     : "bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-[1.02]"
@@ -196,41 +199,42 @@ export default function ForgotPasswordPage() {
             // OTP VERIFY FORM
             // =======================
             <form onSubmit={handleResetPasswordVerifyOtp} className="space-y-5">
-
+              {/* OTP Input */}
               <input
                 type="text"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
                 placeholder="Enter 6-digit OTP"
-                className="w-full px-4 py-3 rounded-lg bg-white/10 border border-gray-400/30 text-white"
+                maxLength={6}
+                className="w-full px-5 py-3.5 text-lg rounded-xl bg-white/10 backdrop-blur-md border border-white/20 focus:ring-2 focus:ring-cyan-400 outline-none text-white placeholder-gray-400 shadow-[inset_0_0_15px_rgba(0,0,0,0.3)]"
+                aria-label="OTP Input"
               />
-
-              {/* RESEND + TIMER */}
-              <div className="flex items-center justify-between mt-2 text-sm">
-
-                {/* TIMER */}
+    
+              {/* Resend + Timer */}
+              <div className="flex items-center justify-between text-sm">
                 <span className="text-gray-300">
                   {timer > 0 ? (
                     <>Resend in <span className="text-cyan-400 font-semibold">{timer}s</span></>
                   ) : (
-                    <span className="text-green-400">You can resend OTP</span>
+                    <span className="text-green-400 font-medium">You can resend OTP</span>
                   )}
                 </span>
                 
-                {/* RESEND BUTTON */}
                 <button
                   type="button"
                   disabled={timer > 0 || resending}
                   onClick={handleResendOtp}
-                  className={`text-cyan-400 underline disabled:opacity-50 cursor-pointer`}
+                  className={`font-semibold ${timer > 0 || resending ? "text-gray-500 cursor-not-allowed" : "text-cyan-300 hover:text-cyan-200 cursor-pointer"}`}
+                  aria-label="Resend OTP"
                 >
                   {resending ? "Resending..." : "Resend OTP"}
                 </button>
               </div>
                 
+              {/* Verify Button */}
               <button
                 type="submit"
-                className="w-full py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 font-semibold"
+                className="w-full cursor-pointer py-3.5 rounded-xl text-lg font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg hover:shadow-cyan-500/40 hover:brightness-110 transition-all duration-200 active:scale-[0.97]"
               >
                 Verify OTP
               </button>
