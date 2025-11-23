@@ -314,8 +314,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 font-semibold 
-                    text-white hover:scale-[1.02] transition-transform disabled:opacity-70 text-sm sm:text-base"
+                className="w-full cursor-pointer py-3.5 rounded-xl text-lg font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg hover:shadow-cyan-500/40 hover:brightness-110 transition-all duration-200 active:scale-[0.97]"
               >
                 {loading ? "Creating Account..." : "Register"}
               </button>
@@ -435,4 +434,5 @@ export default function RegisterPage() {
     </div>
   );
 }
+
 
