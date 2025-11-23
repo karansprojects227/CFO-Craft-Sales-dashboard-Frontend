@@ -82,6 +82,8 @@ export default function RegisterPage() {
   // -----------------------------------------
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
+    setError(""); // clear previous errors
+    setMessage(""); // clear previous messages
 
     try {
       const res = await fetch(`${API_BASE}/api/auth/verify-register-otp`, {
@@ -95,12 +97,8 @@ export default function RegisterPage() {
 
       const data = await res.json();
 
-      if (res.ok) {
-        setMessage(data.message);
-        router.push("/auth/login");
-      } else {
-        setError(data.message);
-      }
+      if (res.ok) router.push("/auth/login"); 
+      else setError(data.message);
     } catch (error) {
       setError("Server error!");
     }
@@ -437,3 +435,4 @@ export default function RegisterPage() {
     </div>
   );
 }
+
