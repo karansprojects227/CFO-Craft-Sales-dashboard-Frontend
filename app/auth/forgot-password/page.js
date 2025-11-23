@@ -177,8 +177,7 @@ export default function ForgotPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-3 rounded-lg font-semibold text-white cursor-pointer transition-all flex items-center justify-center space-x-2
-                  ${loading
+                classNamew-full cursor-pointer py-3.5 rounded-xl text-lg font-semibold shadow-lg hover:shadow-cyan-500/40 hover:brightness-110 transition-all duration-200 active:scale-[0.97]
                     ? "bg-gray-500 cursor-not-allowed"
                     : "bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-[1.02]"
                   }`}
@@ -246,3 +245,4 @@ export default function ForgotPasswordPage() {
     </div>
   );
 }
+
