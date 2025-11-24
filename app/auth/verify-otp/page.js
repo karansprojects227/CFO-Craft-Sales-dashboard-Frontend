@@ -27,6 +27,7 @@ export default function VerifyOtpPage() {
   // HANDLE OTP VERIFY
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
+    setLoading(true);
   
     try {
       const res = await fetch(`${API_BASE}/api/auth/verify-otp`, {
@@ -51,6 +52,8 @@ export default function VerifyOtpPage() {
     } catch (err) {
       console.error("Verify OTP Frontend Error:", err);
       toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -154,6 +157,7 @@ export default function VerifyOtpPage() {
     </div>
   );
 }
+
 
 
 
