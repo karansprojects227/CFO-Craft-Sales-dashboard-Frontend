@@ -41,7 +41,7 @@ export default function ForgotPasswordPage() {
         setMessage(data.message)
         setOtpSent(true)
       }
-      else setError(data.error || "Failed to send reset link");
+      else setError(data.message);
     } catch {
       setError("Server error, please try again later.");
     } finally {
@@ -245,4 +245,5 @@ export default function ForgotPasswordPage() {
     </div>
   );
 }
+
 
