@@ -130,10 +130,12 @@ export default function ResetPasswordPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full cursor-pointer py-3.5 rounded-xl text-lg font-semibold shadow-lg hover:shadow-cyan-500/40 hover:brightness-110 transition-all duration-200 active:scale-[0.97]
+                className={`w-full py-3.5 rounded-xl text-lg font-semibold
+                  flex items-center justify-center gap-2
+                  shadow-lg hover:shadow-cyan-500/40 hover:brightness-110 transition-all duration-200 active:scale-[0.97]
                   ${loading
                     ? "bg-gray-500 cursor-not-allowed"
-                    : "bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-[1.02]"
+                    : "bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-[1.02] cursor-pointer"
                   }`}
               >
                 {loading ? (
@@ -158,4 +160,5 @@ export default function ResetPasswordPage() {
     </div>
   );
 }
+
 
