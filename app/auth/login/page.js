@@ -204,10 +204,25 @@ export default function LoginPage() {
               />
               <button
                 type="submit"
-                className="w-full cursor-pointer py-3.5 rounded-xl text-lg font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg hover:shadow-cyan-500/40 hover:brightness-110 transition-all duration-200 active:scale-[0.97]"
+                disabled={loading}
+                className={`w-full py-3.5 rounded-xl text-lg font-semibold
+                  flex items-center justify-center gap-2
+                  shadow-lg hover:shadow-cyan-500/40 hover:brightness-110 transition-all duration-200 active:scale-[0.97]
+                  ${loading
+                    ? "bg-gray-500 cursor-not-allowed"
+                    : "bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-[1.02] cursor-pointer"
+                  }`}
               >
-                {loading ? "Checking..." : "Continue"}
+                {loading ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Checking...</span>
+                  </>
+                ) : (
+                  "Continue"
+                )}
               </button>
+                
             </form>
           )}
 
@@ -238,11 +253,25 @@ export default function LoginPage() {
               {/* Submit Button */}
               <button
                 type="submit"
-                disabled={loading || !password}
-                className="w-full cursor-pointer py-3.5 rounded-xl text-lg font-semibold bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg hover:shadow-cyan-500/40 hover:brightness-110 transition-all duration-200 active:scale-[0.97]"
+                disabled={loading}
+                className={`w-full py-3.5 rounded-xl text-lg font-semibold
+                  flex items-center justify-center gap-2
+                  shadow-lg hover:shadow-cyan-500/40 hover:brightness-110 transition-all duration-200 active:scale-[0.97]
+                  ${loading
+                    ? "bg-gray-500 cursor-not-allowed"
+                    : "bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-[1.02] cursor-pointer"
+                  }`}
               >
-                {loading ? "Logging in..." : "Login"}
+                {loading ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Logging in...</span>
+                  </>
+                ) : (
+                  "Login"
+                )}
               </button>
+                
             </form>
           )}
 
@@ -284,12 +313,28 @@ export default function LoginPage() {
                 </button>
               </div>
                 
+              {/* Verify Button */}
               <button
                 type="submit"
-                className="w-full py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 font-semibold"
+                disabled={loading}
+                className={`w-full py-3.5 rounded-xl text-lg font-semibold
+                  flex items-center justify-center gap-2
+                  shadow-lg hover:shadow-cyan-500/40 hover:brightness-110 transition-all duration-200 active:scale-[0.97]
+                  ${loading
+                    ? "bg-gray-500 cursor-not-allowed"
+                    : "bg-gradient-to-r from-blue-600 to-cyan-500 hover:scale-[1.02] cursor-pointer"
+                  }`}
               >
-                Verify OTP
+                {loading ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Verifying...</span>
+                  </>
+                ) : (
+                  "Verify OTP"
+                )}
               </button>
+                
             </form>
           )}
 
@@ -353,6 +398,7 @@ export default function LoginPage() {
     </div>
   );
 }
+
 
 
 
