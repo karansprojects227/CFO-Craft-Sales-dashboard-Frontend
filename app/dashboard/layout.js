@@ -231,7 +231,7 @@ export default function DashboardLayout({ children }) {
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-800">
 
           {/* 🖼️ Show image only on mobile when sidebar is open */}
-          {isMobile && sidebarOpen && (
+          {isMobile && !sidebarOpen && (
             <motion.img
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -371,3 +371,4 @@ export default function DashboardLayout({ children }) {
     </div>
   );
 }
+
